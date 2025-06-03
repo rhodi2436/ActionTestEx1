@@ -11,17 +11,11 @@ jobs:
 
     steps:
       - name: Action-SSH
-        uses: tiyee/action-ssh@release
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.HOST }} 
           port: ${{ secrets.PORT }} 
           username: ${{ secrets.USERNAME }} 
-          privateKey: ${{ secrets.PRIVATE_KEY }} 
-          command: |
-            @if not exist "C:\repos\ActionEx1\.git"(
-               git clone git@github.com:rhodi2436/ActionTestEx1.git C:\repos\ActionEx1
-            )
-            cd C:\repos\ActionEx1
-            git pull origin master
-            dotnet publish -c Release -o C:\publish_web\ActionEx1
-            iisreset
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            whoami &  echo Pull or Clone... & ( if not exist C:\repos\ActionTestEx1\.git (git clone git@github.com:rhodi2436/ActionTestEx1.git C:\repos\ActionTestEx1   ) else (  cd /d C:\repos\ActionTestEx1  & git pull origin master )) & dotnet publish C:\repos\ActionTestEx1 -c Release --property:OutputPath=C:\publish_web\ActionTestEx1 & iisreset
