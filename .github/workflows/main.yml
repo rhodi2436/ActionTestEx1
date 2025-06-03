@@ -1,0 +1,27 @@
+name: Deploy to Windows Server
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Action-SSH
+        uses: tiyee/action-ssh@release
+        with:
+          host: ${{ secrets.HOST }} 
+          port: ${{ secrets.PORT }} 
+          username: ${{ secrets.USERNAME }} 
+          privateKey: ${{ secrets.PRIVATE_KEY }} 
+          command: |
+            @if not exist "C:\repos\ActionEx1\.git"(
+               git clone git@github.com:rhodi2436/ActionTestEx1.git C:\repos\ActionEx1
+            )
+            cd C:\repos\ActionEx1
+            git pull origin master
+            dotnet publish -c Release -o C:\publish_web\ActionEx1
+            iisreset
