@@ -17,5 +17,5 @@ jobs:
           port: ${{ secrets.PORT }} 
           username: ${{ secrets.USERNAME }} 
           password: ${{ secrets.PASSWORD }}
-          script: |
-            whoami &  echo Pull or Clone... & ( if not exist C:\repos\ActionTestEx1\.git (git clone git@github.com:rhodi2436/ActionTestEx1.git C:\repos\ActionTestEx1   ) else (  cd /d C:\repos\ActionTestEx1  & git pull origin master )) & dotnet publish C:\repos\ActionTestEx1 -c Release --property:OutputPath=C:\publish_web\ActionTestEx1 & iisreset
+          script: "C:\\deploy.bat"
+            # whoami &  echo Pull or Clone... & ( if not exist C:\repos\ActionTestEx1\.git (git clone git@github.com:rhodi2436/ActionTestEx1.git C:\repos\ActionTestEx1   ) else (  cd /d C:\repos\ActionTestEx1  & git pull origin master )) & dotnet publish C:\repos\ActionTestEx1 -c Release --property:OutputPath=C:\publish_web\ActionTestEx1 & iisreset
